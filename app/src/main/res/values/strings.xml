@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">M-Hike</string>
     <string name="create_hike">Create Hike</string>
+    <string name="scroll_view_description">THis is a scroll view</string>
+    <string name="create_hike_title">Create your new hike</string>
+    <string name="hike_name_label">Hike Name</string>
+    <string name="hike_location_label">Hike Location</string>
+    <string name="hike_date_label">Hike Date</string>
+    <string name="hike_length_label">Hike Length</string>
+    <string name="hike_description_label">Hike Description</string>
+    <string name="hike_difficulty_label">Level of difficulty</string>
+    <string name="parking_availability_label">Parking Availability</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="save_hike">Save Hike</string>
 </resources>

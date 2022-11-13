@@ -1,8 +1,6 @@
 package com.uog_mobile_application_development.m_hike.utils.database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -64,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(CreateTable);
     }
 
-//    public long insertData( String tableName, HashMap<String, String> data){
+    public void insertData(String tableName, HashMap<String, String> data){
 //        ContentValues rowValues = new ContentValues();
 //        for (String i : data.keySet()) {
 //            System.out.println(i);
@@ -82,6 +80,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        cursor.close();
 //
 //        return database.insertOrThrow(tableName, null, rowValues);
-//    }
+    }
 
 }

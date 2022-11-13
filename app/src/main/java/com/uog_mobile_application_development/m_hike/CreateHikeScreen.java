@@ -19,9 +19,6 @@ public class CreateHikeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_hike_screen);
-        Button createHikeButton = findViewById(R.id.create_hike_button);
-        Button viewHikeButton = findViewById(R.id.viewHike);
-        TextView viewHikeText = findViewById(R.id.viewHikeText);
     }
 
     public void onCreateHike() {
