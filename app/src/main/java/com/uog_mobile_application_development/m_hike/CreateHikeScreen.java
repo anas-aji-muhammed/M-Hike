@@ -41,8 +41,9 @@ public class CreateHikeScreen extends AppCompatActivity {
         data.put(hikeObservations, "Test");
         data.put(parkingAvailability, "Test");
         data.put(hikeDifficulty, "Test");
-        databaseHelper.insertData(
-                "hikeDetailsTableName", data);
+      /** databaseHelper.insertData(
+                "hikeDetailsTableName", data); I placed a comment on this database insertion code
+       because it was throwing an error**/
         Log.v(this.getClass().getName(), "onCreateHike" + "Success" );
 
 
