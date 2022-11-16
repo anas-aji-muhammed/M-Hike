@@ -13,7 +13,6 @@ import com.uog_mobile_application_development.m_hike.utils.database.DatabaseHelp
 import java.util.HashMap;
 
 public class CreateHikeScreen extends AppCompatActivity {
-    DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +21,8 @@ public class CreateHikeScreen extends AppCompatActivity {
     }
 
     public void onCreateHike() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
         final String hikeName = "hike_name";
         final String hikeId = "hike_id";
         final String hikeLocation = "hike_location";
