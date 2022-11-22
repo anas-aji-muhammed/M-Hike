@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import static com.uog_mobile_application_development.m_hike.utils.database.DbConstants.*;
 
 import androidx.annotation.Nullable;
 
+import com.uog_mobile_application_development.m_hike.models.HikeDataModel;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -19,15 +23,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     final String hikeDetailsTableName = "hike_details";
 
-    final String hikeName = "hike_name";
-    final String hikeId = "hike_id";
-    final String hikeLocation = "hike_location";
-    final String hikeDate = "hike_date";
-    final String parkingAvailability = "parking_availability";
-    final String hikeLength = "hike_length";
-    final String hikeDifficulty = "hike_difficulty";
-    final String hikeDescription = "hike_description";
-    final String hikeObservations = "hike_observations";
+//    final String hikeName = "hike_name";
+//    final String hikeId = "hike_id";
+//    final String hikeLocation = "hike_location";
+//    final String hikeDate = "hike_date";
+//    final String parkingAvailability = "parking_availability";
+//    final String hikeLength = "hike_length";
+//    final String hikeDifficulty = "hike_difficulty";
+//    final String hikeDescription = "hike_description";
+//    final String hikeObservations = "hike_observations";
 
 
 
@@ -104,6 +108,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.v("insertHike Exception", e.toString());
             return 0;
         }
+    }
+
+    public ArrayList<HikeDataModel> getAllHikeDetails(){
+        Cursor results = database.query(hikeDetailsTableName, new String[] {
+                hikeName, hikeLocation, hikeDate,parkingAvailability, hikeLength, hikeDifficulty, hikeDescription,  hikeId},
+                null, null, null, null, hikeName);
+
+        ArrayList<HikeDataModel> hikeDataArrayList = new ArrayList<HikeDataModel>();
+
+        results.moveToFirst();
+        while (!results.isAfterLast()) {
+            HikeDataModel hikeData = new HikeDataModel(
+                    results.getString(0),
+                    results.getString(1),
+                    results.getString(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getString(6),
+                    results.getInt(7)
+
+            );
+            hikeDataArrayList.add(hikeData);
+
+            results.moveToNext();
+        }
+
+        return hikeDataArrayList;
     }
 
 }

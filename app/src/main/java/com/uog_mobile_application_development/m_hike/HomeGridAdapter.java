@@ -8,23 +8,29 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.uog_mobile_application_development.m_hike.models.HikeDataModel;
+
+import java.util.ArrayList;
+
 public class HomeGridAdapter extends BaseAdapter {
 
     Context context;
     String[] hikeName;
+    ArrayList<HikeDataModel> hikes;
     int[] image;
 
     LayoutInflater inflater;
 
-    public HomeGridAdapter(Context context, String[] hikeName, int[] image) {
+    public HomeGridAdapter(Context context, String[] hikeName, int[] image, ArrayList<HikeDataModel> hikeData) {
         this.context = context;
         this.hikeName = hikeName;
         this.image = image;
+        this.hikes = hikeData;
     }
 
     @Override
     public int getCount() {
-        return hikeName.length;
+        return hikes.size();
     }
 
     @Override
@@ -50,8 +56,8 @@ public class HomeGridAdapter extends BaseAdapter {
         ImageView imageView = view.findViewById(R.id.home_grid_image);
         TextView textView = view.findViewById(R.id.home_item_name);
 
-        imageView.setImageResource(image[i]);
-        textView.setText(hikeName[i]);
+        imageView.setImageResource(R.drawable.a);
+        textView.setText(hikes.get(i).getHikeName());
 
         return view;
     }
