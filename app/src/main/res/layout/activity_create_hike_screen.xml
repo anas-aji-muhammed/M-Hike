@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:layout_margin="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -85,8 +85,9 @@
                 android:text="@string/parking_availability_label" />
 
             <RadioGroup
+                android:id="@+id/parkingAvailabilityRadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <RadioButton
                     android:id="@+id/radioParkingAvailabilityYes"
