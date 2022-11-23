@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long insertHike(HashMap<String, String> data){
+    public long insertHike(HashMap<String, String> data, Boolean isForUpdate) {
         ContentValues rowValues = new ContentValues();
         for (String i : data.keySet()) {
             System.out.println(i);
@@ -96,13 +96,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
 
-        try{
-            return database.insertOrThrow(hikeDetailsTableName, null, rowValues);
+        if (!isForUpdate) {
 
+            try {
+                return database.insertOrThrow(hikeDetailsTableName, null, rowValues);
+
+            } catch (android.database.SQLException e) {
+                Log.v("insertHike Exception", e.toString());
+                return 0;
+            }
         }
-        catch ( android.database.SQLException e){
-            Log.v("insertHike Exception", e.toString());
-            return 0;
+        else {
+            try {
+                return database.update(hikeDetailsTableName, rowValues, "hike_id = ?", new String[]{data.get("hike_id")});
+
+            } catch (android.database.SQLException e) {
+                Log.v("insertHike Exception", e.toString());
+                return 0;
+            }
         }
     }
 

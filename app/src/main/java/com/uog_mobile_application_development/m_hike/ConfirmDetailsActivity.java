@@ -83,6 +83,10 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }
+                else if(hikeData.getHikeId()!=-1){
+
+                    editHike();
+                }
                 else{
                     saveHike();
                 }
@@ -94,6 +98,8 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
     }
 
     public void saveHike() {
+        Log.v("saveHike",  "Called" );
+
         HashMap<String, String> data = new HashMap<String, String>();
             data.put(hikeName, hikeData.getHikeName());
             data.put(hikeDate, hikeData.getHikeDate());
@@ -103,10 +109,29 @@ public class ConfirmDetailsActivity extends AppCompatActivity {
             data.put(hikeObservations, "");
             data.put(parkingAvailability, hikeData.getParkingAvailability());
             data.put(hikeDifficulty, hikeData.getParkingAvailability());
-            long result = databaseHelper.insertHike(data);
+            long result = databaseHelper.insertHike(data, false);
             Log.v("onCreateHike",  "Success" );
             Log.v("result", String.format("%s",result) );
             Toast.makeText(ConfirmDetailsActivity.this, String.format("%s Hike Added", hikeData.getHikeName()),Toast.LENGTH_LONG).show();
+            finish();
+
+        }
+    public void editHike() {
+        Log.v("editHike",  "Called" );
+
+        HashMap<String, String> data = new HashMap<String, String>();
+            data.put(hikeName, hikeData.getHikeName());
+            data.put(hikeDate, hikeData.getHikeDate());
+            data.put(hikeDescription, hikeData.getHikeDescription());
+            data.put(hikeLength, hikeData.getHikeLength());
+            data.put(hikeLocation, hikeData.getHikeLocation());
+            data.put(hikeObservations, "");
+            data.put(parkingAvailability, hikeData.getParkingAvailability());
+            data.put(hikeDifficulty, hikeData.getParkingAvailability());
+            long result = databaseHelper.insertHike(data, true);
+            Log.v("editHike",  "Success" );
+            Log.v("result", String.format("%s",result) );
+            Toast.makeText(ConfirmDetailsActivity.this, String.format("%s Hike updated", hikeData.getHikeName()),Toast.LENGTH_LONG).show();
             finish();
 
         }

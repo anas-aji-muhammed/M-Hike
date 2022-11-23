@@ -150,7 +150,7 @@ public class CreateHikeScreen extends AppCompatActivity {
                         parkAvailability = "NO";
 
                     }
-                    HikeDataModel hikeData = new HikeDataModel(
+                    HikeDataModel hike= new HikeDataModel(
                             hikeNameField.getText().toString(),
                             hikeLocationField.getText().toString(),
                             hikeDateField.getText().toString(),
@@ -158,10 +158,13 @@ public class CreateHikeScreen extends AppCompatActivity {
                             hikeLengthField.getText().toString(),
                             hikeDifficultyField.getText().toString(),
                             hikeDescriptionField.getText().toString(),
-                            1
+                            -1
 
                     );
-                    intent.putExtra("hikeData", hikeData);
+                    if(isForEdit){
+                        hike.setHikeId(hikeData.getHikeId());
+                    }
+                    intent.putExtra("hikeData", hike);
                     intent.putExtra("isForEdit", false);
                     startActivityForResult(intent, 0);
                 }
