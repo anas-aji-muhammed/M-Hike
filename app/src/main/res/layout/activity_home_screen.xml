@@ -6,102 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".HomeScreen">
 
-    <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:background="#F4F4F4"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <SearchView
+            android:id="@+id/HikeSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="7dp"
+            android:background="#EAE7E7"
+            android:outlineProvider="background">
 
-            <SearchView
-                android:id="@+id/HikeSearch"
+            <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="7dp"
-                android:background="#EAE7E7"
-                android:outlineProvider="background">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.tabs.TabLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Monday" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tuesday" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wednesday" />
-                </com.google.android.material.tabs.TabLayout>
-            </SearchView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="397dp"
-                android:layout_height="195dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="15dp">
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="151dp"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/forest"
-                    tools:srcCompat="@drawable/forest" />
-
-                <TextView
-                    android:id="@+id/textCreateHike"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="165dp"
-                    android:text="Create a hike"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="Create a hike" />
-
-                <Button
-                    android:id="@+id/create_hike_button"
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="63dp"
-                    android:background="@drawable/round_button"
-                    android:padding="4dp"
-                    android:text="@string/create_hike" />
-
-                <TextView
-                    android:id="@+id/textView2"
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
-                    android:layout_height="82dp"
-                    android:layout_marginLeft="165dp"
-                    android:layout_marginTop="40dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam" />
+                    android:layout_height="wrap_content"
+                    android:text="Monday" />
 
-            </androidx.cardview.widget.CardView>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuesday" />
 
-            <GridView
-                android:id="@+id/gridView"
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wednesday" />
+            </com.google.android.material.tabs.TabLayout>
+        </SearchView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="397dp"
+            android:layout_height="195dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="151dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/forest"
+                tools:srcCompat="@drawable/forest" />
+
+            <TextView
+                android:id="@+id/textCreateHike"
                 android:layout_width="match_parent"
-                android:layout_height="477dp"
-                android:numColumns="2" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="165dp"
+                android:text="Create a hike"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Create a hike" />
 
-        </LinearLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/create_hike_button"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="63dp"
+                android:background="@drawable/round_button"
+                android:padding="4dp"
+                android:text="@string/create_hike" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="82dp"
+                android:layout_marginLeft="165dp"
+                android:layout_marginTop="40dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam" />
+
+        </androidx.cardview.widget.CardView>
+
+        <GridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="477dp"
+            android:numColumns="2" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

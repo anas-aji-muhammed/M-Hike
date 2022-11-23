@@ -13,4 +13,6 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="save_hike">Save Hike</string>
+    <string name="confirm_details_label">Confirm Hike Details</string>
+
 </resources>

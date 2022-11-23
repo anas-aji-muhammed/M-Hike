@@ -95,10 +95,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
 
         }
-        String[] projection = {
-                "hike_name",
-               "hike_location"
-        };
 
         try{
             return database.insertOrThrow(hikeDetailsTableName, null, rowValues);

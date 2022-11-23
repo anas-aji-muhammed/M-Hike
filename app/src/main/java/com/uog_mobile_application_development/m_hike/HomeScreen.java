@@ -51,7 +51,21 @@ public class HomeScreen extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(HomeScreen.this, "You clicked on" +hikeName[i],Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeScreen.this, ConfirmDetailsActivity.class);
+                HikeDataModel hikeData = new HikeDataModel(
+                        data.get(i).getHikeName(),
+                        data.get(i).getHikeLocation(),
+                        data.get(i).getHikeDate(),
+                        data.get(i).getParkingAvailability(),
+                        data.get(i).getHikeLength(),
+                        data.get(i).getHikeDifficulty(),
+                        data.get(i).getHikeDescription(),
+                        1
+
+                );
+                intent.putExtra("hikeData", hikeData);
+                intent.putExtra("isForEdit", true);
+                startActivity(intent);
             }
         });
     }

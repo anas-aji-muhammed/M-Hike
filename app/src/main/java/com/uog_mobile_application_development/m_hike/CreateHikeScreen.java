@@ -4,6 +4,7 @@ import static com.uog_mobile_application_development.m_hike.utils.database.DbCon
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uog_mobile_application_development.m_hike.models.HikeDataModel;
 import com.uog_mobile_application_development.m_hike.utils.database.DatabaseHelper;
 
 import java.util.HashMap;
@@ -33,6 +35,9 @@ public class CreateHikeScreen extends AppCompatActivity {
     RadioGroup parkingAvailabilitySelection;
     RadioButton parkingAvailabilitySelectionYES;
     RadioButton parkingAvailabilitySelectionNO;
+    Intent i;
+    Boolean isForEdit;
+    HikeDataModel hikeData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,39 +53,39 @@ public class CreateHikeScreen extends AppCompatActivity {
         parkingAvailabilitySelection = findViewById(R.id.parkingAvailabilityRadioGroup);
         parkingAvailabilitySelectionYES = findViewById(R.id.radioParkingAvailabilityYes);
         parkingAvailabilitySelectionNO = findViewById(R.id.radioParkingAvailabilityNO);
+
+        i = getIntent();
+        isForEdit = i.getBooleanExtra("isForEdit", false);
+        hikeData = (HikeDataModel)i.getSerializableExtra("hikeData");
+
+        if(isForEdit){
+            hikeNameField.setText(hikeData.getHikeName());
+            hikeLocationField.setText(hikeData.getHikeLocation());
+            hikeDateField.setText(hikeData.getHikeDate());
+            hikeDescriptionField.setText(hikeData.getHikeDescription());
+            hikeLengthField.setText(hikeData.getHikeLength());
+            hikeDifficultyField.setText(hikeData.getHikeDifficulty());
+            if(hikeData.getParkingAvailability().equals("YES")){
+                parkingAvailabilitySelection.check(R.id.radioParkingAvailabilityYes);
+
+            }
+            else{
+                parkingAvailabilitySelection.check(R.id.radioParkingAvailabilityNO);
+
+            }
+        }
+
+
         addListenerOnButton();
     }
 
-    public void onCreateHike() {
-        HashMap<String, String> data = new HashMap<String, String>();
-        if(validateFields()){
-            data.put(hikeName, hikeNameField.getText().toString());
-            data.put(hikeDate, hikeDateField.getText().toString());
-            data.put(hikeDescription, hikeDescriptionField.getText().toString());
-            data.put(hikeLength, hikeLengthField.getText().toString());
-            data.put(hikeLocation, hikeLocationField.getText().toString());
-            data.put(hikeObservations, "");
-            data.put(parkingAvailability, "Test");
-            data.put(hikeDifficulty, hikeDifficultyField.getText().toString());
-            long result = databaseHelper.insertHike(data);
-            Log.v("onCreateHike",  "Success" );
-            Log.v("result", String.format("%s",result) );
-            Toast.makeText(CreateHikeScreen.this, String.format("%s Hike Added", hikeNameField.getText().toString()),Toast.LENGTH_SHORT).show();
-            finish();
-
-        }
-        else{
-            Log.v(this.getClass().getName(), "onCreateHike" + "validation false" );
-            Toast.makeText(CreateHikeScreen.this, String.format("%s Hike Failed to Add", hikeNameField.getText().toString()),Toast.LENGTH_SHORT).show();
-
-        }
 
 
 
 
 
 
-    }
+
 
     private Boolean validateFields(){
         if(hikeNameField.length()==0){
@@ -123,13 +128,58 @@ public class CreateHikeScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                onCreateHike();
+//                new AlertDialog.Builder(CreateHikeScreen.this)
+//                        .setTitle("Confirm")
+//                        .setMessage("Do you really want to whatever?")
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+//                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                Toast.makeText(MainActivity.this, "Yaay", Toast.LENGTH_SHORT).show();
+//                            }})
+//                        .setNegativeButton(android.R.string.no, null).show();
+//                onCreateHike();
+                if(validateFields()) {
+                    Intent intent = new Intent(context, ConfirmDetailsActivity.class);
+                    Log.v("Parking availability", String.format("%s",parkingAvailabilitySelection.getCheckedRadioButtonId() ));
+                    String parkAvailability = "";
+                    if(parkingAvailabilitySelection.getCheckedRadioButtonId() == R.id.radioParkingAvailabilityYes){
+                        parkAvailability = "YES";
+                    }
+                    else{
+                        parkAvailability = "NO";
 
+                    }
+                    HikeDataModel hikeData = new HikeDataModel(
+                            hikeNameField.getText().toString(),
+                            hikeLocationField.getText().toString(),
+                            hikeDateField.getText().toString(),
+                            parkAvailability,
+                            hikeLengthField.getText().toString(),
+                            hikeDifficultyField.getText().toString(),
+                            hikeDescriptionField.getText().toString(),
+                            1
 
+                    );
+                    intent.putExtra("hikeData", hikeData);
+                    intent.putExtra("isForEdit", false);
+                    startActivityForResult(intent, 0);
+                }
+                else {
+                    Log.v(this.getClass().getName(), "onCreateHike" + "validation false" );
+                    Toast.makeText(CreateHikeScreen.this, String.format("%s Hike Failed to Add", hikeNameField.getText().toString()),Toast.LENGTH_SHORT).show();
+
+                }
             }
 
         });
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 }
 

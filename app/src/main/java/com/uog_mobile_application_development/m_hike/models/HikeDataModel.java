@@ -1,6 +1,8 @@
 package com.uog_mobile_application_development.m_hike.models;
 
-public class HikeDataModel {
+import java.io.Serializable;
+
+public class HikeDataModel implements Serializable {
     private String hikeName;
     private String hikeLocation;
     private String hikeDate;
