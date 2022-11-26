@@ -14,5 +14,11 @@ public final class DbConstants {
     public static final String hikeLength = "hike_length";
     public static final String hikeDifficulty = "hike_difficulty";
     public static final String hikeDescription = "hike_description";
+
+    public static final String observationId = "observation_id";
     public static final String hikeObservations = "hike_observations";
+    public static final String timeOfObservations = "hike_time";
+    public static final String observationComments = "observation_comments";
+
+
 }

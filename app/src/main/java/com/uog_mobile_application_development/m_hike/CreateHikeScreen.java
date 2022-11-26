@@ -4,6 +4,7 @@ import static com.uog_mobile_application_development.m_hike.utils.database.DbCon
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -157,13 +158,21 @@ public class CreateHikeScreen extends AppCompatActivity {
                             parkAvailability,
                             hikeLengthField.getText().toString(),
                             hikeDifficultyField.getText().toString(),
-                            hikeDescriptionField.getText().toString(),
-                            -1
-
+                            hikeDescriptionField.getText().toString()
                     );
                     if(isForEdit){
+                        Log.v("hikeData.getHikeId()", String.format("%s",hikeData.getHikeId()));
+
                         hike.setHikeId(hikeData.getHikeId());
                     }
+                    else{
+                        hike.setHikeId(-1);
+                        Log.v("hikeData.getHikeId()", String.format("%s",hike.getHikeId()));
+                    }
+
+                    Log.v("isForEdit", String.format("%s",isForEdit));
+
+
                     intent.putExtra("hikeData", hike);
                     intent.putExtra("isForEdit", false);
                     startActivityForResult(intent, 0);
@@ -179,10 +188,18 @@ public class CreateHikeScreen extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LongLogTag")
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        finish();
+        Log.v("onActivityResult",  String.format("Called" ));
+        Log.v("onActivityResult resultCode",  String.format("%s", resultCode ));
+        Log.v("onActivityResult int extra",  String.format("%s", i.getIntExtra("nav",0) ));
+
+        if(resultCode==1){
+            Log.v("onActivityResult resultCode",  String.format("%s", resultCode ));
+            finish();
+        }
     }
 }
 

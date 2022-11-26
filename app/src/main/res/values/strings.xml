@@ -14,5 +14,15 @@
     <string name="no">NO</string>
     <string name="save_hike">Save Hike</string>
     <string name="confirm_details_label">Confirm Hike Details</string>
+    <string name="delete_hike">Delete Hike</string>
+    <string name="delete_observation">Delete Observation</string>
+    <string name="add_observation">Add Observation</string>
+    <string name="observations">Observations</string>
+    <string name="observation">Observation</string>
+    <string name="delete">Delete</string>
+    <string name="date">Date</string>
+    <string name="comment">Comment</string>
+    <string name="save_observation">Save Observation</string>
+
 
 </resources>

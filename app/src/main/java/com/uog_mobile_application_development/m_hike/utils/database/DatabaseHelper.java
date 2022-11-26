@@ -12,6 +12,7 @@ import static com.uog_mobile_application_development.m_hike.utils.database.DbCon
 import androidx.annotation.Nullable;
 
 import com.uog_mobile_application_development.m_hike.models.HikeDataModel;
+import com.uog_mobile_application_development.m_hike.models.ObservationDataModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase database;
 
     final String hikeDetailsTableName = "hike_details";
+    final String observationsTableName = "observations_table";
 
 //    final String hikeName = "hike_name";
 //    final String hikeId = "hike_id";
@@ -67,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database = sqLiteDatabase;
 
 
-        final String CreateTable =     "CREATE TABLE " + hikeDetailsTableName + " (" +
+        final String CreateHikeTable =     "CREATE TABLE " + hikeDetailsTableName + " (" +
                 hikeId   + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 hikeLocation + " TEXT," +
                 hikeDate + " TEXT," +
@@ -78,8 +80,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 hikeName + " Text," +
                 hikeObservations + " INTEGER" + ")";
 
+        final String CreateObservationsTable =     "CREATE TABLE " + observationsTableName + " (" +
+                observationId   + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                hikeId + " INTEGER," +
+                hikeObservations + " TEXT," +
+                timeOfObservations + " TEXT," +
+                observationComments + " TEXT" +
+                 ")";
+
         try{
-            sqLiteDatabase.execSQL(CreateTable);
+            sqLiteDatabase.execSQL(CreateHikeTable);
+            sqLiteDatabase.execSQL(CreateObservationsTable);
 
         }
         catch ( android.database.SQLException e){
@@ -99,7 +110,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (!isForUpdate) {
 
             try {
-                return database.insertOrThrow(hikeDetailsTableName, null, rowValues);
+                long insertionResult =  database.insertOrThrow(hikeDetailsTableName, null, rowValues);
+                Log.v("insertionResult", String.format("%s",insertionResult));
+
+                return insertionResult;
 
             } catch (android.database.SQLException e) {
                 Log.v("insertHike Exception", e.toString());
@@ -108,6 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         else {
             try {
+                Log.v("database.update",String.format("Hike Id -- %s",data.get("hike_id")));
+
                 return database.update(hikeDetailsTableName, rowValues, "hike_id = ?", new String[]{data.get("hike_id")});
 
             } catch (android.database.SQLException e) {
@@ -121,28 +137,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor results = database.query(hikeDetailsTableName, new String[] {
                 hikeName, hikeLocation, hikeDate,parkingAvailability, hikeLength, hikeDifficulty, hikeDescription,  hikeId},
                 null, null, null, null, hikeName);
+//        String query = String.format("SELECT * FROM %s", hikeDetailsTableName);
+//        Cursor results = database.rawQuery(query, null);
 
-        ArrayList<HikeDataModel> hikeDataArrayList = new ArrayList<HikeDataModel>();
+        ArrayList<HikeDataModel> hikeDataArrayList = new ArrayList<>();
 
         results.moveToFirst();
         while (!results.isAfterLast()) {
+            Log.v("database results",String.format("%s", (Object) results.getColumnNames()));
+
             HikeDataModel hikeData = new HikeDataModel(
                     results.getString(0),
+
                     results.getString(1),
                     results.getString(2),
                     results.getString(3),
                     results.getString(4),
                     results.getString(5),
-                    results.getString(6),
-                    results.getInt(7)
+                    results.getString(6)
 
-            );
+                    );
+            hikeData.setHikeId(results.getInt(7));
             hikeDataArrayList.add(hikeData);
 
             results.moveToNext();
         }
 
+        results.close();
+
         return hikeDataArrayList;
+    }
+
+    public int deleteHike(String id){
+        return database.delete(hikeDetailsTableName, "hike_id=?", new String[]{id});
+    }
+
+    // Observations Db operations
+
+    public long insertObservations(HashMap<String, String> data) {
+        Log.v("Insert Observation","Called");
+        ContentValues rowValues = new ContentValues();
+        for (String i : data.keySet()) {
+            System.out.println(i);
+            rowValues.put(i, data.get(i)
+            );
+
+        }
+            try {
+                long insertionResult =  database.insertOrThrow(observationsTableName, null, rowValues);
+                Log.v("insertionResult", String.format("%s",insertionResult));
+
+                return insertionResult;
+
+            } catch (android.database.SQLException e) {
+                Log.v("insertHike Exception", e.toString());
+                return 0;
+            }
+
+    }
+
+    public int deleteObservation(String id){
+        return database.delete(observationsTableName, "observation_id=?", new String[]{id});
+    }
+
+    public ArrayList<ObservationDataModel> getAllObservations(){
+        Cursor results = database.query(observationsTableName, new String[] {
+                        observationId, hikeObservations, timeOfObservations, observationComments},
+                null, null, null, null, hikeObservations);
+//        String query = String.format("SELECT * FROM %s", hikeDetailsTableName);
+//        Cursor results = database.rawQuery(query, null);
+
+        ArrayList<ObservationDataModel> observationDataArrayList = new ArrayList<>();
+
+        results.moveToFirst();
+        while (!results.isAfterLast()) {
+            Log.v("database results",String.format("%s", (Object) results.getColumnNames()));
+
+            ObservationDataModel observationData = new ObservationDataModel(
+                    results.getString(1),
+                    results.getString(2),
+                    results.getString(3)
+
+            );
+            observationData.setObservationId(results.getInt(0));
+            observationDataArrayList.add(observationData);
+
+            results.moveToNext();
+        }
+
+        results.close();
+
+        return observationDataArrayList;
     }
 
 
