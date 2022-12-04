@@ -23,6 +23,12 @@
     <string name="date">Date</string>
     <string name="comment">Comment</string>
     <string name="save_observation">Save Observation</string>
+    <string name="upload_hike">Upload Hike</string>
+    <string name="clear_hikes_data">Clear all Hikes</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear_db_alert_message">This action will clear all data from database and can\'t be undone.</string>
 
 
 </resources>

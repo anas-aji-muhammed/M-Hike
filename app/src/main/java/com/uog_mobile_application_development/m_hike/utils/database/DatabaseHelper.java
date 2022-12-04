@@ -3,6 +3,7 @@ package com.uog_mobile_application_development.m_hike.utils.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -170,6 +171,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int deleteHike(String id){
         return database.delete(hikeDetailsTableName, "hike_id=?", new String[]{id});
+    }
+    public int deleteAllHikes(){
+        try{
+            database.execSQL("delete from "+ hikeDetailsTableName);
+            return 1;
+        }
+        catch (SQLException e){
+            Log.v("DeleteHikes Exception", String.format("%s",e.toString()));
+            return 0;
+        }
     }
 
     // Observations Db operations
