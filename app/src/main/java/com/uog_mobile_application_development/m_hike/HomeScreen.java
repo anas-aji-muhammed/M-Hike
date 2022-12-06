@@ -98,6 +98,9 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 
+    /*
+    Listener for registering button and
+     */
     public void addListenerOnButton() {
 
         final Context context = this;
@@ -200,31 +203,19 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onResponse(Call<APIResponseModel> call, Response<APIResponseModel> response) {
                 Log.v("Api Response", String.format("%s", response.toString()));
+                Toast.makeText(getApplication(),
+                        String.format("Data Uploaded %s", response.toString()), Toast.LENGTH_SHORT)
+                        .show();
             }
 
             @Override
             public void onFailure(Call<APIResponseModel> call, Throwable t) {
                 Log.v("Api onFailure", String.format("%s", t.toString()));
-
+                Toast.makeText(getApplication(),
+                        String.format("Data Failed %s", t.toString()), Toast.LENGTH_SHORT)
+                        .show();
             }
         });
 
     }
-//    APIResponseModel user;
-//    Call<APIResponseModel> call1 = apiInterface.createAPIResponseModel(user);
-//
-//        call1.enqueue(new Callback<APIResponseModel>() {
-//        @Override
-//        public void onResponse(Call<APIResponseModel> call1, Response<APIResponseModel> response) {
-//            APIResponseModel user1 = response.body();
-//
-//            Toast.makeText(getApplicationContext(), user1.name + " " + user1.job + " " + user1.id + " " + user1.createdAt, Toast.LENGTH_SHORT).show();
-//
-//        }
-//
-//        @Override
-//        public void onFailure(Call<APIResponseModel> call, Throwable t) {
-//            call.cancel();
-//        }
-//    });
 }

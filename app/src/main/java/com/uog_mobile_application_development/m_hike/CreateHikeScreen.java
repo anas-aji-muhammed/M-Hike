@@ -40,6 +40,7 @@ public class CreateHikeScreen extends AppCompatActivity {
     Boolean isForEdit;
     HikeDataModel hikeData;
 
+    // this method does all initial cases
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class CreateHikeScreen extends AppCompatActivity {
         isForEdit = i.getBooleanExtra("isForEdit", false);
         hikeData = (HikeDataModel)i.getSerializableExtra("hikeData");
 
+        // setting values to controllers when editing a hike
         if(isForEdit){
             hikeNameField.setText(hikeData.getHikeName());
             hikeLocationField.setText(hikeData.getHikeLocation());
@@ -81,6 +83,7 @@ public class CreateHikeScreen extends AppCompatActivity {
 
 
 
+    //for validating required fields
     private Boolean validateFields(){
         if(hikeNameField.length()==0){
             hikeNameField.setError("Name is Required");
@@ -112,6 +115,7 @@ public class CreateHikeScreen extends AppCompatActivity {
     }
 
 
+    //Listeners for button
     public void addListenerOnButton() {
 
         final Context context = this;
@@ -181,6 +185,7 @@ public class CreateHikeScreen extends AppCompatActivity {
 
     }
 
+    //for refreshing data in the current screen
     @SuppressLint("LongLogTag")
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {

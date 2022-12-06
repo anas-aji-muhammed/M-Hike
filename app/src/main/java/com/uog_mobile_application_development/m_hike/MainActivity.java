@@ -1,7 +1,5 @@
 package com.uog_mobile_application_development.m_hike;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

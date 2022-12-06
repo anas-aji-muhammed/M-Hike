@@ -26,18 +26,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final String hikeDetailsTableName = "hike_details";
     final String observationsTableName = "observations_table";
 
-//    final String hikeName = "hike_name";
-//    final String hikeId = "hike_id";
-//    final String hikeLocation = "hike_location";
-//    final String hikeDate = "hike_date";
-//    final String parkingAvailability = "parking_availability";
-//    final String hikeLength = "hike_length";
-//    final String hikeDifficulty = "hike_difficulty";
-//    final String hikeDescription = "hike_description";
-//    final String hikeObservations = "hike_observations";
 
 
-
+    //constructor for getting db instance
     public DatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, 1);
         try{
@@ -60,12 +51,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        database.execSQL("Drop Table if EXISTS " + databaseName);
+        database.execSQL("Drop Table if EXISTS " + databaseName); // drop table is already there
         Log.v(this.getClass().getName(), databaseName+ " upgraded to version " + i1 );
-        onCreate(database);
+        onCreate(database); //create the table again
 
     }
 
+    //function for creating table and observation table
     public void createHikeDetailsTable(SQLiteDatabase sqLiteDatabase){
         database = sqLiteDatabase;
 
@@ -99,6 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //function for inserting hike to table
     public long insertHike(HashMap<String, String> data, Boolean isForUpdate) {
         ContentValues rowValues = new ContentValues();
         for (String i : data.keySet()) {
@@ -108,6 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
 
+        // condition for whether to update an existing record or insert new
         if (!isForUpdate) {
 
             try {
@@ -134,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // get all hike data from db
     public ArrayList<HikeDataModel> getAllHikeDetails(){
         Cursor results = database.query(hikeDetailsTableName, new String[] {
                 hikeName, hikeLocation, hikeDate,parkingAvailability, hikeLength, hikeDifficulty, hikeDescription,  hikeId},
@@ -169,6 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return hikeDataArrayList;
     }
 
+    //function for search in hike table
     public ArrayList<HikeDataModel> searchHikes(String searchText){
                 String query = String.format("SELECT * FROM %s WHERE name LIKE %s", hikeDetailsTableName, searchText);
 
@@ -215,6 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    //function for deleting a hike
     public int deleteHike(String id){
         return database.delete(hikeDetailsTableName, "hike_id=?", new String[]{id});
     }
@@ -229,8 +226,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Observations Db operations
-
+    // Observations Db insertion
     public long insertObservations(HashMap<String, String> data) {
         Log.v("Insert Observation","Called");
         ContentValues rowValues = new ContentValues();
@@ -253,6 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Observations Db deletion
     public int deleteObservation(String id){
         return database.delete(observationsTableName, "observation_id=?", new String[]{id});
     }
