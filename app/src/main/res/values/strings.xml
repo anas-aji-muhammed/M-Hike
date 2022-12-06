@@ -29,6 +29,9 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="clear_db_alert_message">This action will clear all data from database and can\'t be undone.</string>
+    <string name="app_slogan">The best hike app</string>
+    <string name="logo_name">M-Hike Logo</string>
+    <string name="powered_by">Powered By Group 16:MAP Coursework</string>
 
 
 </resources>

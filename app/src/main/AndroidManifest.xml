@@ -17,7 +17,7 @@
             android:name=".CreateHikeScreen"
             android:exported="false" />
         <activity
-            android:name=".HomeScreen"
+            android:name=".MhikeSplash"
             android:exported="true">
 
             <!-- Changed the intent-filter from MainActivity to HomeScreen -->
@@ -28,9 +28,14 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".HomeScreen"
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
 
     </application>
 
