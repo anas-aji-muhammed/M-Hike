@@ -169,6 +169,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return hikeDataArrayList;
     }
 
+    public ArrayList<HikeDataModel> searchHikes(String searchText){
+                String query = String.format("SELECT * FROM %s WHERE name LIKE %s", hikeDetailsTableName, searchText);
+
+        Cursor results = database.rawQuery
+                ("select * from " + hikeDetailsTableName + " where "
+                        + hikeName + " like ?", new String[] { "%" + searchText + "%" });
+
+//        Cursor results = database.rawQuery(query, null);
+
+        ArrayList<HikeDataModel> hikeDataArrayList = new ArrayList<>();
+
+        results.moveToFirst();
+        while (!results.isAfterLast()) {
+            Log.v("database results",String.format("%s", (Object) results.getColumnNames()));
+            Log.v("results.getString(1)",String.format("%s", results.getString(1)));
+            Log.v("results.getString(2)",String.format("%s", results.getString(2)));
+            Log.v("results.getString(3)",String.format("%s", results.getString(3)));
+            Log.v("results.getString(4)",String.format("%s", results.getString(4)));
+            Log.v("results.getString(5)",String.format("%s", results.getString(5)));
+            Log.v("results.getString(6)",String.format("%s", results.getString(6)));
+            Log.v("results.getString(7)",String.format("%s", results.getString(7)));
+            Log.v("results.getString(0)",String.format("%s", results.getString(0)));
+
+            HikeDataModel hikeData = new HikeDataModel(
+                    results.getString(7),
+
+                    results.getString(1),
+                    results.getString(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getString(6)
+
+            );
+            hikeData.setHikeId(results.getInt(0));
+            hikeDataArrayList.add(hikeData);
+
+            results.moveToNext();
+        }
+
+        results.close();
+
+        return hikeDataArrayList;
+    }
+
+
     public int deleteHike(String id){
         return database.delete(hikeDetailsTableName, "hike_id=?", new String[]{id});
     }

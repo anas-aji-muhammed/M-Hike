@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class HomeScreen extends AppCompatActivity {
     Button createHikeButton;
     Button postHikeButton;
     Button deleteHikesButton;
+    SearchView searchView;
     DatabaseHelper db;
     APIInterface apiInterface;
     ArrayList<HikeDataModel> data;
@@ -45,16 +47,20 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
         addListenerOnButton();
         db = new DatabaseHelper(this);
-        setHomepageGridData();
+        setHomepageGridData(false, "");
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
 
     }
 
-    private void setHomepageGridData(){
-        String [] hikeName = {"Greenwich Park", "North Calculka", "Lake District", "Hyde Park"};
+    private void setHomepageGridData(boolean isForSearch, String query){
         int [] hikeImages = {R.drawable.a, R.drawable.b,R.drawable.c,R.drawable.d,};
-        data =  db.getAllHikeDetails();
+        if(isForSearch){
+            data =  db.searchHikes(query);
+        }
+        else{
+            data =  db.getAllHikeDetails();
+        }
         Log.v("Db Data", data.toString());
 
 //        if(data.isEmpty()){
@@ -63,7 +69,7 @@ public class HomeScreen extends AppCompatActivity {
 //
 //        }
 
-        HomeGridAdapter homeGridAdapter = new HomeGridAdapter(HomeScreen.this, hikeName,hikeImages, data);
+        HomeGridAdapter homeGridAdapter = new HomeGridAdapter(HomeScreen.this,hikeImages, data);
         binding.gridView.setAdapter(homeGridAdapter);
 
         binding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +105,7 @@ public class HomeScreen extends AppCompatActivity {
         createHikeButton = (Button) findViewById(R.id.create_hike_button);
         postHikeButton = (Button) findViewById(R.id.saveHikeToAPIButton);
         deleteHikesButton = (Button) findViewById(R.id.clearDBButton);
+        searchView = (SearchView) findViewById(R.id.HikeSearch);
 
         createHikeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -145,6 +152,25 @@ public class HomeScreen extends AppCompatActivity {
 
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                setHomepageGridData(true, s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if(s.isEmpty()){
+                    setHomepageGridData(true, s);
+                }
+                else{
+                    setHomepageGridData(false, "");
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -152,7 +178,7 @@ public class HomeScreen extends AppCompatActivity {
         super.onResume();
         Log.v("onResume ", "Called");
 
-        setHomepageGridData();
+        setHomepageGridData(false, "");
     }
 
     /**

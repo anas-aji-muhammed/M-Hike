@@ -12,7 +12,9 @@ public class HikeDataModel implements Serializable {
     private String hikeDescription;
     private int hikeId;
 
-    public HikeDataModel(String hikeName, String hikeLocation, String hikeDate, String parkingAvailability, String hikeLength, String hikeDifficulty, String hikeDescription) {
+    public HikeDataModel(
+            String hikeName,
+            String hikeLocation, String hikeDate, String parkingAvailability, String hikeLength, String hikeDifficulty, String hikeDescription) {
         this.hikeName = hikeName;
         this.hikeLocation = hikeLocation;
         this.hikeDate = hikeDate;

@@ -15,15 +15,13 @@ import java.util.ArrayList;
 public class HomeGridAdapter extends BaseAdapter {
 
     Context context;
-    String[] hikeName;
     ArrayList<HikeDataModel> hikes;
     int[] image;
 
     LayoutInflater inflater;
 
-    public HomeGridAdapter(Context context, String[] hikeName, int[] image, ArrayList<HikeDataModel> hikeData) {
+    public HomeGridAdapter(Context context, int[] image, ArrayList<HikeDataModel> hikeData) {
         this.context = context;
-        this.hikeName = hikeName;
         this.image = image;
         this.hikes = hikeData;
     }

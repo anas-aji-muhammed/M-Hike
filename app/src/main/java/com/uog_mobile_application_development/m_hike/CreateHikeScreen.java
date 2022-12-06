@@ -68,7 +68,6 @@ public class CreateHikeScreen extends AppCompatActivity {
             hikeDifficultyField.setText(hikeData.getHikeDifficulty());
             if(hikeData.getParkingAvailability().equals("YES")){
                 parkingAvailabilitySelection.check(R.id.radioParkingAvailabilityYes);
-
             }
             else{
                 parkingAvailabilitySelection.check(R.id.radioParkingAvailabilityNO);
@@ -79,12 +78,6 @@ public class CreateHikeScreen extends AppCompatActivity {
 
         addListenerOnButton();
     }
-
-
-
-
-
-
 
 
 
